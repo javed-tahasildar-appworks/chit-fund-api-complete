@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: chitfund-postgres
+    environment:
+      POSTGRES_DB: chitfund
+      POSTGRES_USER: chitfund
+      POSTGRES_PASSWORD: chitfund123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chitfund-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: chitfund-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - chitfund-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chitfund-api
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: chitfund
+      DATABASE_PASSWORD: chitfund123
+      DATABASE_DBNAME: chitfund
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: your-secret-key-change-in-production
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - chitfund-network
+
+volumes:
+  postgres_data:
+
+networks:
+  chitfund-network:
+    driver: bridge

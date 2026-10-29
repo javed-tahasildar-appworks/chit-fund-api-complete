@@ -1,0 +1,1353 @@
+basePath: /api/v1
+definitions:
+  domain.AddSubscriberToChitRequest:
+    properties:
+      subscriber_id:
+        example: 1
+        type: integer
+      surety_required:
+        example: false
+        type: boolean
+      ticket_count:
+        example: 1
+        minimum: 1
+        type: integer
+    required:
+    - subscriber_id
+    - ticket_count
+    type: object
+  domain.Auction:
+    properties:
+      auction_date:
+        type: string
+      auction_id:
+        type: integer
+      auction_method:
+        type: string
+      auction_time:
+        description: TIME type
+        type: string
+      chit_id:
+        type: integer
+      conducted_by:
+        type: integer
+      created_at:
+        type: string
+      max_discount_allowed:
+        type: number
+      month_number:
+        type: integer
+      remarks:
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+      venue:
+        type: string
+      winning_bid_id:
+        type: integer
+    type: object
+  domain.ChitGroup:
+    properties:
+      auction_day_of_month:
+        type: integer
+      auction_time:
+        description: TIME type stored as string
+        type: string
+      auction_type:
+        type: string
+      branch_id:
+        type: integer
+      chit_code:
+        type: string
+      chit_id:
+        type: integer
+      chit_name:
+        type: string
+      chit_value:
+        type: number
+      company_id:
+        type: integer
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      current_month:
+        type: integer
+      end_date:
+        type: string
+      foreman_commission_percent:
+        type: number
+      foreman_user_id:
+        type: integer
+      installment_amount:
+        type: number
+      installment_type:
+        type: string
+      max_discount_percent:
+        type: number
+      security_deposit:
+        type: number
+      start_date:
+        type: string
+      status:
+        type: string
+      total_months:
+        type: integer
+      total_subscribers:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  domain.ChitSubscriber:
+    properties:
+      chit_id:
+        type: integer
+      chit_subscriber_id:
+        type: integer
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      drop_reason:
+        type: string
+      dropped_date:
+        type: string
+      enrollment_fee:
+        type: number
+      is_prized:
+        type: boolean
+      join_date:
+        type: string
+      prized_date:
+        type: string
+      prized_month:
+        type: integer
+      slot_number:
+        type: integer
+      status:
+        type: string
+      subscriber_id:
+        type: integer
+      surety_required:
+        type: boolean
+      ticket_count:
+        type: integer
+      transfer_date:
+        type: string
+      transfer_to_subscriber_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  domain.Company:
+    properties:
+      city:
+        type: string
+      company_id:
+        type: integer
+      company_name:
+        type: string
+      contact_email:
+        type: string
+      contact_phone:
+        type: string
+      created_at:
+        type: string
+      foreman_commission_percent:
+        type: number
+      gstin:
+        type: string
+      license_number:
+        type: string
+      license_valid_till:
+        type: string
+      minimum_capital_lakhs:
+        type: number
+      office_address:
+        type: string
+      pan_number:
+        type: string
+      pincode:
+        type: string
+      registered_address:
+        type: string
+      registration_number:
+        type: string
+      state_id:
+        type: integer
+      status:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.CreateChitGroupRequest:
+    properties:
+      auction_day_of_month:
+        example: 5
+        maximum: 31
+        minimum: 1
+        type: integer
+      auction_time:
+        example: "11:00:00"
+        type: string
+      auction_type:
+        enum:
+        - AUCTION
+        - DRAW
+        - FIXED
+        example: AUCTION
+        type: string
+      chit_name:
+        example: Lakshmi Gold Chit - 20 Lakhs
+        maxLength: 200
+        minLength: 5
+        type: string
+      chit_value:
+        example: 2000000
+        type: number
+      foreman_commission_percent:
+        example: 5
+        maximum: 5
+        type: number
+      max_discount_percent:
+        example: 40
+        maximum: 40
+        type: number
+      start_date:
+        example: "2024-03-01"
+        type: string
+      total_months:
+        example: 20
+        type: integer
+      total_subscribers:
+        example: 20
+        type: integer
+    required:
+    - auction_day_of_month
+    - auction_time
+    - auction_type
+    - chit_name
+    - chit_value
+    - start_date
+    - total_months
+    - total_subscribers
+    type: object
+  domain.CreateCompanyRequest:
+    properties:
+      company_name:
+        example: Sri Lakshmi Chit Funds Pvt Ltd
+        maxLength: 200
+        minLength: 3
+        type: string
+      contact_email:
+        example: info@srilakshmichits.com
+        type: string
+      contact_phone:
+        example: +91-80-12345678
+        type: string
+      foreman_commission_percent:
+        example: 5
+        maximum: 5
+        type: number
+      gstin:
+        example: 29AABCS1234F1Z5
+        type: string
+      pan_number:
+        example: AABCS1234F
+        type: string
+      registered_address:
+        example: 123, MG Road, Bangalore
+        type: string
+      registration_number:
+        example: CHF/KA/2020/12345
+        type: string
+      state_id:
+        example: 1
+        type: integer
+    required:
+    - company_name
+    - contact_email
+    - contact_phone
+    - registered_address
+    - registration_number
+    - state_id
+    type: object
+  domain.CreateInstallmentRequest:
+    properties:
+      base_installment_amount:
+        example: 100000
+        type: number
+      chit_id:
+        example: 1
+        type: integer
+      dividend_amount:
+        example: 0
+        type: number
+      due_date:
+        example: "2024-03-05"
+        type: string
+      month_number:
+        example: 1
+        type: integer
+    required:
+    - base_installment_amount
+    - chit_id
+    - due_date
+    - month_number
+    type: object
+  domain.CreateSubscriberRequest:
+    properties:
+      aadhaar_number:
+        example: "123456789012"
+        type: string
+      address:
+        example: 12/34, 1st Cross, Indiranagar
+        type: string
+      annual_income:
+        example: 1200000
+        type: number
+      city:
+        example: Bangalore
+        type: string
+      dob:
+        example: "1985-05-15"
+        type: string
+      email:
+        example: ramesh@email.com
+        type: string
+      father_name:
+        example: Venkatesh Rao
+        type: string
+      full_name:
+        example: Ramesh Venkatesh
+        minLength: 3
+        type: string
+      gender:
+        example: MALE
+        type: string
+      mobile:
+        example: "+919876543210"
+        type: string
+      occupation:
+        example: Software Engineer
+        type: string
+      pan_number:
+        example: ABCPR1234D
+        type: string
+      pincode:
+        example: "560038"
+        type: string
+    required:
+    - address
+    - full_name
+    - mobile
+    type: object
+  domain.ErrorResponse:
+    properties:
+      code:
+        example: VALIDATION_ERROR
+        type: string
+      details:
+        example: Field 'username' is required
+        type: string
+      error:
+        example: Invalid request
+        type: string
+    type: object
+  domain.FinalizeAuctionRequest:
+    properties:
+      remarks:
+        example: Auction completed successfully
+        type: string
+      winning_bid_id:
+        example: 1
+        type: integer
+    required:
+    - winning_bid_id
+    type: object
+  domain.Installment:
+    properties:
+      base_installment_amount:
+        type: number
+      chit_id:
+        type: integer
+      created_at:
+        type: string
+      dividend_amount:
+        type: number
+      due_date:
+        type: string
+      grace_period_days:
+        type: integer
+      installment_id:
+        type: integer
+      month_number:
+        type: integer
+      net_payable_amount:
+        type: number
+      penalty_rate_per_day:
+        type: number
+      status:
+        type: string
+    type: object
+  domain.LoginRequest:
+    properties:
+      password:
+        example: password123
+        type: string
+      username:
+        example: admin@chitfund.com
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  domain.LoginResponse:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      expires_in:
+        example: 900
+        type: integer
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      user:
+        $ref: '#/definitions/domain.User'
+    type: object
+  domain.PaginatedResponse:
+    properties:
+      data: {}
+      page:
+        example: 1
+        type: integer
+      page_size:
+        example: 20
+        type: integer
+      total:
+        example: 100
+        type: integer
+      total_pages:
+        example: 5
+        type: integer
+    type: object
+  domain.PlaceBidRequest:
+    properties:
+      bid_discount_amount:
+        example: 350000
+        type: number
+      bid_discount_percent:
+        example: 17.5
+        maximum: 40
+        type: number
+      chit_subscriber_id:
+        example: 1
+        type: integer
+    required:
+    - bid_discount_amount
+    - bid_discount_percent
+    - chit_subscriber_id
+    type: object
+  domain.RecordPaymentRequest:
+    properties:
+      amount:
+        example: 83375
+        type: number
+      payment_mode:
+        enum:
+        - CASH
+        - CHEQUE
+        - NEFT
+        - RTGS
+        - UPI
+        - CARD
+        - ONLINE
+        example: UPI
+        type: string
+      remarks:
+        example: Payment received
+        type: string
+      transaction_reference:
+        example: UPI202403051234
+        type: string
+    required:
+    - amount
+    - payment_mode
+    type: object
+  domain.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    required:
+    - refresh_token
+    type: object
+  domain.Subscriber:
+    properties:
+      aadhaar_number:
+        type: string
+      address:
+        type: string
+      alternate_mobile:
+        type: string
+      annual_income:
+        type: number
+      blacklist_reason:
+        type: string
+      city:
+        type: string
+      company_id:
+        type: integer
+      created_at:
+        type: string
+      created_by:
+        type: integer
+      credit_score:
+        type: integer
+      dob:
+        type: string
+      email:
+        type: string
+      father_name:
+        type: string
+      full_name:
+        type: string
+      gender:
+        type: string
+      is_blacklisted:
+        type: boolean
+      kyc_status:
+        type: string
+      kyc_verified_by:
+        type: integer
+      kyc_verified_date:
+        type: string
+      mobile:
+        type: string
+      occupation:
+        type: string
+      pan_number:
+        type: string
+      photo_path:
+        type: string
+      pincode:
+        type: string
+      signature_path:
+        type: string
+      state_id:
+        type: integer
+      subscriber_code:
+        type: string
+      subscriber_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  domain.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        example: Operation successful
+        type: string
+    type: object
+  domain.UpdateChitGroupRequest:
+    properties:
+      chit_name:
+        example: Updated Chit Name
+        type: string
+      current_month:
+        example: 3
+        type: integer
+      status:
+        example: ACTIVE
+        type: string
+    type: object
+  domain.UpdateCompanyRequest:
+    properties:
+      company_name:
+        example: Sri Lakshmi Chit Funds Pvt Ltd
+        type: string
+      contact_email:
+        example: info@srilakshmichits.com
+        type: string
+      contact_phone:
+        example: +91-80-12345678
+        type: string
+      status:
+        example: ACTIVE
+        type: string
+    type: object
+  domain.UpdateSubscriberRequest:
+    properties:
+      address:
+        example: New Address
+        type: string
+      annual_income:
+        example: 1500000
+        type: number
+      email:
+        example: ramesh@email.com
+        type: string
+      full_name:
+        example: Ramesh Venkatesh
+        type: string
+      mobile:
+        example: "+919876543210"
+        type: string
+    type: object
+  domain.User:
+    properties:
+      branch_id:
+        type: integer
+      company_id:
+        type: integer
+      created_at:
+        type: string
+      email:
+        type: string
+      employee_code:
+        type: string
+      failed_login_attempts:
+        type: integer
+      full_name:
+        type: string
+      is_locked:
+        type: boolean
+      last_login:
+        type: string
+      mobile:
+        type: string
+      permissions:
+        items:
+          type: integer
+        type: array
+      role_id:
+        type: integer
+      role_name:
+        description: Joined data from roles table
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@chitfund.com
+    name: API Support
+  description: Multi-tenant chit fund management system for Admin, Subscribers & Agents
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Chit Fund Management API
+  version: "1.0"
+paths:
+  /auctions:
+    post:
+      consumes:
+      - application/json
+      description: Schedule a new auction for a chit group
+      parameters:
+      - description: Auction details
+        in: body
+        name: body
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Auction'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create auction
+      tags:
+      - auctions
+  /auctions/{id}/bids:
+    post:
+      consumes:
+      - application/json
+      description: Submit a bid for an ongoing auction
+      parameters:
+      - description: Auction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bid details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.PlaceBidRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Place bid in auction
+      tags:
+      - auctions
+  /auctions/{id}/finalize:
+    post:
+      consumes:
+      - application/json
+      description: Complete auction and declare winner
+      parameters:
+      - description: Auction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Winner details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.FinalizeAuctionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Finalize auction
+      tags:
+      - auctions
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and receive JWT access and refresh tokens
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      summary: User login
+      tags:
+      - Authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Get new access token using refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      summary: Refresh access token
+      tags:
+      - Authentication
+  /chits:
+    get:
+      description: Get list of chit groups with filters
+      parameters:
+      - description: Filter by status
+        in: query
+        name: status
+        type: string
+      - default: 20
+        description: Limit results
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PaginatedResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List chit groups
+      tags:
+      - Chit Groups
+    post:
+      consumes:
+      - application/json
+      description: Create a new chit group/scheme
+      parameters:
+      - description: Chit group details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateChitGroupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.ChitGroup'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create chit group
+      tags:
+      - Chit Groups
+  /chits/{id}:
+    get:
+      description: Get detailed information about a chit group
+      parameters:
+      - description: Chit Group ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.ChitGroup'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get chit group by ID
+      tags:
+      - Chit Groups
+    put:
+      consumes:
+      - application/json
+      description: Update chit group details
+      parameters:
+      - description: Chit Group ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update fields
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateChitGroupRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update chit group
+      tags:
+      - Chit Groups
+  /chits/{id}/subscribers:
+    get:
+      description: Get all subscribers enrolled in a chit group
+      parameters:
+      - description: Chit Group ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.ChitSubscriber'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List chit subscribers
+      tags:
+      - Chit Groups
+    post:
+      consumes:
+      - application/json
+      description: Enroll a subscriber in a chit group
+      parameters:
+      - description: Chit Group ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Subscriber details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.AddSubscriberToChitRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Add subscriber to chit
+      tags:
+      - Chit Groups
+  /companies:
+    get:
+      description: Get list of all companies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Company'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List companies
+      tags:
+      - Companies
+    post:
+      consumes:
+      - application/json
+      description: Create a new chit fund company (Super Admin only)
+      parameters:
+      - description: Company details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateCompanyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Company'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create company
+      tags:
+      - Companies
+  /companies/{id}:
+    delete:
+      description: Delete a company
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete company
+      tags:
+      - Companies
+    get:
+      description: Get company details
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Company'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get company by ID
+      tags:
+      - Companies
+    put:
+      consumes:
+      - application/json
+      description: Update company details
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Company details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateCompanyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Company'
+      security:
+      - BearerAuth: []
+      summary: Update company
+      tags:
+      - Companies
+  /installments:
+    get:
+      description: Get list of installments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Installment'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List installments
+      tags:
+      - Installments
+    post:
+      consumes:
+      - application/json
+      description: Create monthly installment schedule
+      parameters:
+      - description: Installment details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateInstallmentRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Installment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create installment
+      tags:
+      - Installments
+  /installments/{id}:
+    get:
+      description: Get installment details
+      parameters:
+      - description: Installment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Installment'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get installment by ID
+      tags:
+      - Installments
+  /installments/{id}/payment:
+    post:
+      consumes:
+      - application/json
+      description: Record installment payment
+      parameters:
+      - description: Installment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Payment details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RecordPaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Record payment
+      tags:
+      - Installments
+  /subscribers:
+    get:
+      description: Get list of all subscribers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Subscriber'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List subscribers
+      tags:
+      - Subscribers
+    post:
+      consumes:
+      - application/json
+      description: Create a new subscriber/customer
+      parameters:
+      - description: Subscriber details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.CreateSubscriberRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Subscriber'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create subscriber
+      tags:
+      - Subscribers
+  /subscribers/{id}:
+    delete:
+      description: Delete a subscriber
+      parameters:
+      - description: Subscriber ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.SuccessResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete subscriber
+      tags:
+      - Subscribers
+    get:
+      description: Get subscriber details
+      parameters:
+      - description: Subscriber ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Subscriber'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/domain.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get subscriber by ID
+      tags:
+      - Subscribers
+    put:
+      consumes:
+      - application/json
+      description: Update subscriber details
+      parameters:
+      - description: Subscriber ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Subscriber details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.UpdateSubscriberRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Subscriber'
+      security:
+      - BearerAuth: []
+      summary: Update subscriber
+      tags:
+      - Subscribers
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
